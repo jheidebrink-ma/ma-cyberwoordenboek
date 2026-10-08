@@ -43,7 +43,7 @@ Elke beslissing wordt zichtbaar na een **geslaagde deployment**. Bij een mislukt
 
 Bron: SURF en Cybersave Yourself, **DigiTaal Cyberwoordenboek**, oktober 2025. Auteurs: Rosanne Pouw en Thijs Kinkhorst. Gebaseerd op het Cyberwoordenboek van Cyberveilig Nederland i.s.m. ECP. Licentie: [Creative Commons Naamsvermelding 4.0 Internationaal](https://creativecommons.org/licenses/by/4.0/deed.nl). De website vermeldt de bron en de digitale bewerking.
 
-De vormgeving is afgestemd op [ma-web.nl](https://www.ma-web.nl/): magenta `#FF00E6`, zwart, wit/lichtgrijs en schreefloze typografie. Het officiële woordmerk is afkomstig van `https://www.ma-web.nl/static/images/logo/secondary-logo.png` en staat lokaal in `public/assets/`. De site gebruikt Helvetica/Arial als systeemlettertypen; het officiële Akzidenz Grotesk-webfont is niet meegeleverd. Er worden geen externe fonts of tracking geladen.
+De vormgeving is afgestemd op [ma-web.nl](https://www.ma-web.nl/): magenta `#FF00E6`, zwart, wit/lichtgrijs en schreefloze typografie. Het officiële woordmerk is afkomstig van `https://www.ma-web.nl/static/images/logo/secondary-logo.png` en staat lokaal in `public/assets/`. Het ma-logo in het roze vlak komt van `https://www.ma-web.nl/static/images/logo/primary-logo.png`. Knoppen en geopende vensters animeren gedurende 0,5 seconde; letterfilters scrollen naar het termenoverzicht. De instelling voor minder beweging wordt gerespecteerd. De site gebruikt Helvetica/Arial als systeemlettertypen; het officiële Akzidenz Grotesk-webfont is niet meegeleverd. Er worden geen externe fonts of tracking geladen.
 
 ## Validatie
 

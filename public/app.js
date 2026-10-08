@@ -3,6 +3,24 @@ const state = { terms: [], query: '', letter: 'Alle', limit: 24 };
 const normalize = value => value.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase('nl');
 const initial = term => /^[a-z]/i.test(term) ? term[0].toUpperCase() : '#';
 const detail = $('detail'), proposal = $('proposal');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+function animateOverview() {
+  if (!reducedMotion.matches) $('results').animate([
+    { opacity: 0, transform: 'translateY(12px)' },
+    { opacity: 1, transform: 'translateY(0)' }
+  ], { duration: 500, easing: 'ease-out' });
+}
+// Capture also handles buttons created dynamically and keyboard activation.
+document.addEventListener('click', event => {
+  const button = event.target.closest('button');
+  if (!button || button.disabled || reducedMotion.matches) return;
+  for (const animation of button.getAnimations()) animation.cancel();
+  button.animate([
+    { transform: 'scale(1)' },
+    { transform: 'scale(.94)', offset: .25 },
+    { transform: 'scale(1)' }
+  ], { duration: 500, easing: 'ease-out' });
+}, true);
 function element(tag, text, className) { const e = document.createElement(tag); if (text) e.textContent = text; if (className) e.className = className; return e; }
 function showTerm(term) {
   $('detail-title').textContent = term.term;
@@ -44,7 +62,7 @@ function render() {
   for (const b of $('alphabet').children) b.setAttribute('aria-pressed', String(b.textContent === state.letter));
 }
 for (const letter of ['Alle', '#', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']) {
-  const b = element('button', letter);b.setAttribute('aria-pressed', String(letter === 'Alle')); b.addEventListener('click', () => { state.letter = letter;state.limit = 24;render(); });$('alphabet').append(b);
+  const b = element('button', letter);b.setAttribute('aria-pressed', String(letter === 'Alle')); b.addEventListener('click', () => { state.letter = letter;state.limit = 24;render();animateOverview();$('results').scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' }); });$('alphabet').append(b);
 }
 $('search').addEventListener('input', e => { state.query = e.target.value;state.limit = 24;render(); });
 $('reset').addEventListener('click', () => { state.query = '';state.letter = 'Alle';state.limit = 24;$('search').value = '';render(); });
