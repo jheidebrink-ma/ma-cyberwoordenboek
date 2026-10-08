@@ -62,7 +62,7 @@ function render() {
   for (const b of $('alphabet').children) b.setAttribute('aria-pressed', String(b.textContent === state.letter));
 }
 for (const letter of ['Alle', '#', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']) {
-  const b = element('button', letter);b.setAttribute('aria-pressed', String(letter === 'Alle')); b.addEventListener('click', () => { state.letter = letter;state.limit = 24;render();animateOverview();$('results').scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' }); });$('alphabet').append(b);
+  const b = element('button', letter);b.setAttribute('aria-pressed', String(letter === 'Alle')); b.addEventListener('click', () => { state.letter = letter;state.limit = 24;render();$('results').scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });animateOverview(); });$('alphabet').append(b);
 }
 $('search').addEventListener('input', e => { state.query = e.target.value;state.limit = 24;render(); });
 $('reset').addEventListener('click', () => { state.query = '';state.letter = 'Alle';state.limit = 24;$('search').value = '';render(); });
