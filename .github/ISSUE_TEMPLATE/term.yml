@@ -1,0 +1,26 @@
+name: Nieuwe term voorstellen
+description: Stel een cyberterm voor. Publicatie vereist goedkeuring door een eigenaar.
+title: "[Term] "
+body:
+  - type: markdown
+    attributes:
+      value: "Je inzending verschijnt pas in het woordenboek nadat een aangewezen repo-eigenaar de exacte inhoud heeft goedgekeurd. Vermeld geen persoonsgegevens."
+  - type: input
+    id: term
+    attributes:
+      label: Term
+      description: De naam van de term (maximaal 120 tekens).
+    validations:
+      required: true
+  - type: textarea
+    id: uitleg
+    attributes:
+      label: Uitleg
+      description: Leg de term in begrijpelijke taal uit (maximaal 5000 tekens). Vermeld een bron als je tekst overneemt.
+    validations:
+      required: true
+  - type: input
+    id: gerelateerd
+    attributes:
+      label: Gerelateerde termen
+      description: Optioneel, gescheiden door komma’s.

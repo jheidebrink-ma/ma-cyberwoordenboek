@@ -1,0 +1,43 @@
+name: Woordenboek beoordelen en publiceren
+on:
+  push:
+    branches: [main]
+  issues:
+    types: [opened, edited, reopened, closed]
+  issue_comment:
+    types: [created, edited, deleted]
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+  pages: write
+  id-token: write
+concurrency:
+  group: woordenboek-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event_name != 'issue_comment' || !github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm test
+      - run: npm run build
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Publiceren
+        id: deployment
+        uses: actions/deploy-pages@v4

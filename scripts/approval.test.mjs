@@ -1,0 +1,23 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { digest, parseProposal, approved, mergeTerms } from './approval.mjs';
+const body = '### Term\n\nPasskey\n\n### Uitleg\n\nEen digitale sleutel.\n\n### Gerelateerde termen\n\nAuthenticatie, Wachtwoord';
+const issue = { body };
+const comment = (login, command, id=1) => ({ id, user: { login }, body: command+' '+digest(body), created_at:'2026-10-08T12:00:00Z' });
+test('een volledige inzending wordt gelezen', () => assert.deepEqual(parseProposal(body), { term:'Passkey', definition:'Een digitale sleutel.',related:['Authenticatie','Wachtwoord'] }));
+test('onvolledige en te lange inzendingen worden geweigerd', () => { assert.equal(parseProposal('### Term\n\nA'), null); assert.equal(parseProposal(body.replace('Passkey', 'x'.repeat(121))), null); });
+test('inzending zonder goedkeuring blijft inactief', () => assert.equal(approved(issue, [], ['owner']), false));
+test('student kan zichzelf niet goedkeuren', () => assert.equal(approved(issue, [comment('student','/accepteer')], ['owner']), false));
+test('alleen aangewezen eigenaar activeert exacte inhoud', () => assert.equal(approved(issue,[comment('owner','/accepteer')],['owner']),true));
+test('bewerken na goedkeuring trekt activering in', () => assert.equal(approved({body:body+'\nWijziging'},[comment('owner','/accepteer')],['owner']),false));
+test('afwijzing door eigenaar trekt goedkeuring in', () => assert.equal(approved(issue,[comment('owner','/accepteer'),comment('owner','/afwijzen',2)],['owner']),false));
+test('afwijzing door student kan goedkeuring niet intrekken', () => assert.equal(approved(issue,[comment('owner','/accepteer'),comment('student','/afwijzen',2)],['owner']),true));
+test('dubbele term overschrijft bestaande uitleg niet', () => assert.deepEqual(mergeTerms([{term:'Passkey',definition:'Oud'}],[{term:'PASSKEY',definition:'Nieuw'}]),[{term:'Passkey',definition:'Oud'}]));
+test('pdf-import bevat volledige termen en bekende begrippen', async () => {
+ const terms=JSON.parse(await readFile(new URL('../data/terms.json',import.meta.url)));
+ assert.equal(terms.length,757);assert.equal(new Set(terms.map(t=>t.id)).size,757);
+ assert.ok(terms.every(t=>t.term&&t.definition&&t.page>=5&&t.page<=101));
+ for(const name of ['0-day','2FA','Aanval','Phishing','Zero-day','AI','Administrator'])assert.ok(terms.some(t=>t.term===name),name);
+ assert.ok(terms.some(t=>t.term.includes('CISSP')&&t.term.includes('Professional')));
+});
