@@ -6342,5 +6342,12 @@
       "Cyberbeveiligingswet"
     ],
     "id": "term-757"
+  },
+  {
+    "term": "ChatGPT",
+    "definition": "ChatGPT is een slimme chatbot (een computerprogramma dat een gesprek voert) ontwikkeld door het Amerikaanse bedrijf OpenAI. De afkorting staat voor Generative Pre-trained Transformer. Dit betekent dat het een getraind taalmodel is dat op basis van patronen in grote hoeveelheden tekst zelf zinnen, antwoorden en code kan genereren.",
+    "related": [],
+    "id": "term-758",
+    "issue": "https://github.com/jheidebrink-ma/ma-cyberwoordenboek/issues/1"
   }
 ]

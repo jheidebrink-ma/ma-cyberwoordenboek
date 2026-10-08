@@ -18,8 +18,8 @@ test('de echte publicatiebuild neemt alleen exact goedgekeurde inzendingen op', 
   const build = spawnSync(process.execPath,['--import',join(dir,'mock.mjs'),new URL('./build.mjs',import.meta.url).pathname],{cwd:dir,encoding:'utf8',env:{...process.env,GITHUB_ACTIONS:'true',GH_TOKEN:'test-fixture',GITHUB_REPOSITORY:'example/repo',GITHUB_EVENT_PATH:''}});
   assert.equal(build.status,0,build.stderr);
   const output=JSON.parse(await readFile(join(dir,'dist','terms.json')));
-  assert.equal(output.length,758);
-  assert.equal(output.filter(t=>t.issue).length,1);
+  assert.equal(output.length,759);
+  assert.equal(output.filter(t=>t.issue).length,2);
   assert.equal(output.at(-1).term,'Nieuwe testterm 1');
  } finally { await rm(dir,{recursive:true,force:true}); }
 });
