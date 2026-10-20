@@ -16,9 +16,10 @@ test('afwijzing door student kan goedkeuring niet intrekken', () => assert.equal
 test('dubbele term overschrijft bestaande uitleg niet', () => assert.deepEqual(mergeTerms([{term:'Passkey',definition:'Oud'}],[{term:'PASSKEY',definition:'Nieuw'}]),[{term:'Passkey',definition:'Oud'}]));
 test('pdf-import en toegevoegde termen zijn volledig en uniek', async () => {
  const terms=JSON.parse(await readFile(new URL('../data/terms.json',import.meta.url)));
- assert.equal(terms.length,758);assert.equal(new Set(terms.map(t=>t.id)).size,758);
- assert.ok(terms.filter(t=>t.id!=='term-758').every(t=>t.term&&t.definition&&t.page>=5&&t.page<=101));
+ assert.equal(terms.length,759);assert.equal(new Set(terms.map(t=>t.id)).size,759);
+ assert.ok(terms.filter(t=>t.id.startsWith('term-')&&t.id!=='term-758').every(t=>t.term&&t.definition&&t.page>=5&&t.page<=101));
  assert.deepEqual(terms.find(t=>t.term==='ChatGPT'),{term:'ChatGPT',definition:'ChatGPT is een slimme chatbot (een computerprogramma dat een gesprek voert) ontwikkeld door het Amerikaanse bedrijf OpenAI. De afkorting staat voor Generative Pre-trained Transformer. Dit betekent dat het een getraind taalmodel is dat op basis van patronen in grote hoeveelheden tekst zelf zinnen, antwoorden en code kan genereren.',related:[],id:'term-758',issue:'https://github.com/jheidebrink-ma/ma-cyberwoordenboek/issues/1'});
+ assert.deepEqual(terms.find(t=>t.term==='Identiteitsdiefstal'),{term:'Identiteitsdiefstal',definition:'Identiteitsdiefstal betekent dat iemand anders zonder jouw toestemming jouw persoonlijke gegevens steelt. Dit gebeurt meestal met als doel om hiermee fraude of bedrog te plegen, alsof diegene jou is.',related:['identiteitsfraude','phishing','social engineering','datalek','geldezels','skimmen'],id:'issue-3',issue:'https://github.com/jheidebrink-ma/ma-cyberwoordenboek/issues/3'});
  for(const name of ['0-day','2FA','Aanval','Phishing','Zero-day','AI','Administrator'])assert.ok(terms.some(t=>t.term===name),name);
  assert.ok(terms.some(t=>t.term.includes('CISSP')&&t.term.includes('Professional')));
 });

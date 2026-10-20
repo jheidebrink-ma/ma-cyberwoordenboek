@@ -6349,5 +6349,19 @@
     "related": [],
     "id": "term-758",
     "issue": "https://github.com/jheidebrink-ma/ma-cyberwoordenboek/issues/1"
+  },
+  {
+    "term": "Identiteitsdiefstal",
+    "definition": "Identiteitsdiefstal betekent dat iemand anders zonder jouw toestemming jouw persoonlijke gegevens steelt. Dit gebeurt meestal met als doel om hiermee fraude of bedrog te plegen, alsof diegene jou is.",
+    "related": [
+      "identiteitsfraude",
+      "phishing",
+      "social engineering",
+      "datalek",
+      "geldezels",
+      "skimmen"
+    ],
+    "id": "issue-3",
+    "issue": "https://github.com/jheidebrink-ma/ma-cyberwoordenboek/issues/3"
   }
 ]
